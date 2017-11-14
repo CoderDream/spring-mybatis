@@ -3,7 +3,6 @@
 ----------
 
 
-
 框架版本
 ----------
 maven, spring 4.3.9
@@ -93,7 +92,7 @@ maven, spring 4.3.9
 		// 静态的日志类LogFactory
 		private static final Log logger = LogFactory.getLog(UserController.class);
 	
-		// 该方法映射的请求为http://localhost:8080/context/user/register，该方法支持GET请求
+		// 该方法映射的请求为http://localhost:8080/spring-mybatis-0303/user/register，该方法支持GET请求
 		@RequestMapping(value = "/register", method = RequestMethod.GET)
 		public String registerForm() {
 			logger.info("register GET方法被调用...");
@@ -101,7 +100,7 @@ maven, spring 4.3.9
 			return "registerForm";
 		}
 	
-		// 该方法映射的请求为http://localhost:8080/RequestMappingTest/user/register，该方法支持POST请求
+		// 该方法映射的请求为http://localhost:8080/spring-mybatis-0303/user/register，该方法支持POST请求
 		@RequestMapping(value = "/register", method = RequestMethod.POST)
 		// 将请求中的loginname参数的值赋给loginname变量,password和username同样处理
 		public String register(@RequestParam("loginname") String loginname,
@@ -119,7 +118,7 @@ maven, spring 4.3.9
 			return "loginForm";
 		}
 	
-		// 该方法映射的请求为http://localhost:8080/RequestMappingTest/user/login
+		// 该方法映射的请求为http://localhost:8080/spring-mybatis-0303/user/login
 		@RequestMapping("/login")
 		public String login(
 				// 将请求中的loginname参数的值赋给loginname变量,password同样处理
