@@ -1,0 +1,5 @@
+/log/
+/test-output/
+/target/
+/src/main/resources/mail.properties
+src/main/resources/mail.properties
