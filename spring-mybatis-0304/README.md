@@ -231,16 +231,18 @@ maven, spring 4.3.9
 ----------
 
 	0 [qtp1677921169-15] [INFO] - org.fkit.controller.DataBindingController 
-	-org.fkit.controller.DataBindingController.pathVariableTest(DataBindingController.java:25) -通过@PathVariable获得数据： 1
-	  2462 [qtp1677921169-12] [INFO] - org.fkit.controller.DataBindingController 
-	-org.fkit.controller.DataBindingController.requestHeaderTest(DataBindingController.java:33) -通过@requestHeaderTest获得数据：
+		-org.fkit.controller.DataBindingController.pathVariableTest(DataBindingController.java:25) 
+		-通过@PathVariable获得数据： 1
+	2462 [qtp1677921169-12] [INFO] - org.fkit.controller.DataBindingController 
+		-org.fkit.controller.DataBindingController.requestHeaderTest(DataBindingController.java:33) 
+		-通过@requestHeaderTest获得数据：
 	 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36
-	  2462 [qtp1677921169-12] [INFO] - org.fkit.controller.DataBindingController 
-	-org.fkit.controller.DataBindingController.requestHeaderTest(DataBindingController.java:35) 
-	-text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
-	  4553 [qtp1677921169-19] [INFO] - org.fkit.controller.DataBindingController 
-	-org.fkit.controller.DataBindingController.cookieValueTest(DataBindingController.java:43) 
-	-通过@requestHeaderTest获得数据： node0158rm9wjzcru7zo3ubdlyk7ff0.node0
+	2462 [qtp1677921169-12] [INFO] - org.fkit.controller.DataBindingController 
+		-org.fkit.controller.DataBindingController.requestHeaderTest(DataBindingController.java:35) 
+		-text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+	4553 [qtp1677921169-19] [INFO] - org.fkit.controller.DataBindingController 
+		-org.fkit.controller.DataBindingController.cookieValueTest(DataBindingController.java:43) 
+		-通过@requestHeaderTest获得数据： node0158rm9wjzcru7zo3ubdlyk7ff0.node0
   
 
 访问截图2
@@ -257,7 +259,9 @@ maven, spring 4.3.9
 控制台信息
 ----------
 
-	  971224 [qtp1677921169-17] [INFO] - org.fkit.controller.SessionAttributesController 
-	-org.fkit.controller.SessionAttributesController.loginForm(SessionAttributesController.java:30) -formName： loginForm
-	  989957 [qtp1677921169-19] [INFO] - org.fkit.controller.SessionAttributesController 
-	-org.fkit.controller.SessionAttributesController.login(SessionAttributesController.java:39) -loginname： test,password： 123456
+	971224 [qtp1677921169-17] [INFO] - org.fkit.controller.SessionAttributesController 
+		-org.fkit.controller.SessionAttributesController.loginForm(SessionAttributesController.java:30) 
+		-formName： loginForm
+	989957 [qtp1677921169-19] [INFO] - org.fkit.controller.SessionAttributesController 
+		-org.fkit.controller.SessionAttributesController.login(SessionAttributesController.java:39) 
+		-loginname： test,password： 123456
