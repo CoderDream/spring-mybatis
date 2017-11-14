@@ -69,14 +69,7 @@ maven, spring 4.3.9
 	import org.apache.commons.logging.LogFactory;
 	import org.springframework.web.servlet.ModelAndView;
 	import org.springframework.web.servlet.mvc.Controller;
-	
-	/**   
-	 * @Description: 
-	 * <br>网站：<a href="http://www.fkit.org">疯狂Java</a> 
-	 * @author 肖文吉	36750064@qq.com   
-	 * @version V1.0   
-	 */
-	
+		
 	/**
 	 * HelloController是一个实现Controller接口的控制器, 可以处理一个单一的请求动作
 	 */
