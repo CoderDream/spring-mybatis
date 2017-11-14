@@ -91,7 +91,7 @@ maven, spring 4.3.9
 	}
 
 
-代码4：spring-mybatis-0201\src\main\webapp\WEB-INF\content\helloWorld.jsp
+代码4：spring-mybatis-0301\src\main\webapp\WEB-INF\content\helloWorld.jsp
 
 	<%@ page language="java" contentType="text/html; charset=UTF-8"
 		pageEncoding="UTF-8"%>
