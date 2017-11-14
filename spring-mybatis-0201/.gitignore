@@ -1,6 +1,5 @@
 /log/
 /test-output/
 /target/
-snapshot/
 /src/main/resources/mail.properties
 src/main/resources/mail.properties
