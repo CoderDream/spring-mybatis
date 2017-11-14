@@ -1,5 +1,4 @@
-#示例0201： 第一个Spring MVC应用
-----------
+# 示例0202：基于注解的控制器
 
 
 版本
@@ -41,18 +40,26 @@ maven, spring 4.3.9
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<beans xmlns="http://www.springframework.org/schema/beans"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.springframework.org/schema/beans
-	        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+	        http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	        http://www.springframework.org/schema/mvc
+	        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd     
+	        http://www.springframework.org/schema/context
+	        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 	
-		<!-- 配置Handle，映射"/hello"请求 -->
-		<bean name="/hello" class="org.fkit.controller.HelloController" />
+		<!-- spring可以自动去扫描base-pack下面的包或者子包下面的java文件， 如果扫描到有Spring的相关注解的类，
+			则把这些类注册为Spring的bean -->
+		<context:component-scan base-package="org.fkit.controller" />
 	
-		<!-- 处理映射器将bean的name作为url进行查找，需要在配置Handle时指定name（即url） -->
-		<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+		<!-- 配置处理映射器 -->
+		<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
 	
-		<!-- SimpleControllerHandlerAdapter是一个处理器适配器，所有处理适配器都要实现 HandlerAdapter接口 -->
-		<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+		<!-- 配置处理器适配器 -->
+		<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
 	
 		<!-- 视图解析器 -->
 		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
@@ -63,29 +70,29 @@ maven, spring 4.3.9
 
 	package org.fkit.controller;
 	
-	import javax.servlet.http.HttpServletRequest;
-	import javax.servlet.http.HttpServletResponse;
-	
 	import org.apache.commons.logging.Log;
 	import org.apache.commons.logging.LogFactory;
+	import org.springframework.stereotype.Controller;
+	import org.springframework.web.bind.annotation.RequestMapping;
 	import org.springframework.web.servlet.ModelAndView;
-	import org.springframework.web.servlet.mvc.Controller;
-		
+	
 	/**
-	 * HelloController是一个实现Controller接口的控制器, 可以处理一个单一的请求动作
+	 * HelloController是一个基于注解的控制器, 可以同时处理多个请求动作，并且无须实现任何接口。
+	 * org.springframework.stereotype.Controller注解用于指示该类是一个控制器
 	 */
-	public class HelloController implements Controller {
+	@Controller
+	public class HelloController {
+	
 		private static final Log logger = LogFactory.getLog(HelloController.class);
 	
 		/**
-		 * handleRequest是Controller接口必须实现的方法。
-		 * 该方法的参数是对应请求的HttpServletRequest和HttpServletResponse。
-		 * 该方法必须返回一个包含视图路径或视图路径和模型的ModelAndView对象。
+		 * org.springframework.web.bind.annotation.RequestMapping注解
+		 * 用来映射请求的的URL和请求的方法等。本例用来映射"/hello" hello只是一个普通方法。
+		 * 该方法返回一个包含视图路径或视图路径和模型的ModelAndView对象。
 		 */
-		@Override
-		public ModelAndView handleRequest(HttpServletRequest request,
-				HttpServletResponse response) throws Exception {
-			logger.info("handleRequest 被调用");
+		@RequestMapping(value = "/hello")
+		public ModelAndView hello() {
+			logger.info("hello方法 被调用");
 			// 创建准备返回的ModelAndView对象，该对象通常包含了返回视图的路径、模型的名称以及模型对象
 			ModelAndView mv = new ModelAndView();
 			// 添加模型数据 可以是任意的POJO对象
@@ -97,6 +104,7 @@ maven, spring 4.3.9
 		}
 	
 	}
+
 
 代码4：spring-mybatis-0201\src\main\webapp\WEB-INF\content\welcome.jsp
 
@@ -117,10 +125,10 @@ maven, spring 4.3.9
 访问
 ----------
 
-[http://localhost:8088/spring-mybatis-0201/hello](http://localhost:8088/spring-mybatis-0201/hello)
+[http://localhost:8088/spring-mybatis-0201/hello](http://localhost:8088/spring-mybatis-0202/hello)
 
 
-![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0201/snapshot/hello.png)
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0202/snapshot/020201.png)
 
 
 控制台信息
@@ -128,8 +136,8 @@ maven, spring 4.3.9
 
 
 	
-	0 [qtp1445758842-15] [INFO] - org.fkit.controller.HelloController 
-	-org.fkit.controller.HelloController.handleRequest(HelloController.java:31) -handleRequest 被调用
+	1 [qtp10001825-19] [INFO] - org.fkit.controller.HelloController 
+	-org.fkit.controller.HelloController.hello(HelloController.java:25) -hello方法 被调用
 
 
 
