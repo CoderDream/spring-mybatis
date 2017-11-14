@@ -125,7 +125,7 @@ maven, spring 4.3.9
 访问
 ----------
 
-[http://localhost:8088/spring-mybatis-0201/hello](http://localhost:8088/spring-mybatis-0202/hello)
+[http://localhost:8088/spring-mybatis-0202/hello](http://localhost:8088/spring-mybatis-0202/hello)
 
 
 ![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0202/snapshot/020201.png)
