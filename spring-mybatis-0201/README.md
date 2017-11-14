@@ -48,16 +48,13 @@ maven, spring 4.3.9
 		<bean name="/hello" class="org.fkit.controller.HelloController" />
 	
 		<!-- 处理映射器将bean的name作为url进行查找，需要在配置Handle时指定name（即url） -->
-		<bean
-			class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+		<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
 	
 		<!-- SimpleControllerHandlerAdapter是一个处理器适配器，所有处理适配器都要实现 HandlerAdapter接口 -->
-		<bean
-			class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+		<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
 	
 		<!-- 视图解析器 -->
-		<bean
-			class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
+		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
 	
 	</beans>
 
