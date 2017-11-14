@@ -221,7 +221,7 @@ maven, spring 4.3.9
 访问截图
 ----------
 
-[http://localhost:8088/spring-mybatis-0302/index.jsp](http://localhost:8088/spring-mybatis-0302/index.jsp)
+[http://localhost:8088/spring-mybatis-0303/user/register](http://localhost:8088/spring-mybatis-0303/user/register)
 
 ![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0303/snapshot/snap030301.png)
 
