@@ -27,7 +27,8 @@ public class HelloController implements Controller {
 	 * 该方法必须返回一个包含视图路径或视图路径和模型的ModelAndView对象。
 	 */
 	@Override
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView handleRequest(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		logger.info("handleRequest 被调用");
 		// 创建准备返回的ModelAndView对象，该对象通常包含了返回视图的路径、模型的名称以及模型对象
 		ModelAndView mv = new ModelAndView();

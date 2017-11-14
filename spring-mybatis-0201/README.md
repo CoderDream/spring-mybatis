@@ -1,5 +1,15 @@
-# spring-mybatis-0201
+# 第一个Spring MVC应用
+
+
+版本
+----------
+
 maven, spring 4.3.9
+
+
+
+核心代码
+----------
 
 
 访问
