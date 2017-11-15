@@ -32,14 +32,30 @@ maven, spring 4.3.9
 			<servlet-name>springmvc</servlet-name>
 			<url-pattern>/</url-pattern>
 		</servlet-mapping>
+		<!-- 编码过滤器 -->
+		<filter>
+			<filter-name>characterEncodingFilter</filter-name>
+			<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+			<init-param>
+				<param-name>encoding</param-name>
+				<param-value>UTF-8</param-value>
+			</init-param>
+		</filter>
+		<filter-mapping>
+			<filter-name>characterEncodingFilter</filter-name>
+			<url-pattern>/*</url-pattern>
+		</filter-mapping>
+		<!-- 欢迎页面 -->
+		<welcome-file-list>
+			<welcome-file>index.jsp</welcome-file>
+		</welcome-file-list>
 	</web-app>
 
 代码2：springmvc-config.xml
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<beans xmlns="http://www.springframework.org/schema/beans"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 		xmlns:context="http://www.springframework.org/schema/context"
 		xsi:schemaLocation="
 	        http://www.springframework.org/schema/beans
@@ -49,22 +65,24 @@ maven, spring 4.3.9
 	        http://www.springframework.org/schema/context
 	        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 	
-	    <!-- spring可以自动去扫描base-pack下面的包或者子包下面的java文件，
-	    	如果扫描到有Spring的相关注解的类，则把这些类注册为Spring的bean -->
-	    <context:component-scan base-package="org.fkit.controller"/>
-	    
-	    <!-- 视图解析器  -->
-	     <bean id="viewResolver"
-	          class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
-	        <!-- 前缀 -->
-	        <property name="prefix">
-	            <value>/WEB-INF/content/</value>
-	        </property>
-	        <!-- 后缀 -->
-	        <property name="suffix">
-	            <value>.jsp</value>
-	        </property>
-	    </bean>
+		<!-- 可以访问web.xml配置的默认页(welcome-file) -->
+		<mvc:default-servlet-handler />
+	
+		<!-- spring可以自动去扫描base-pack下面的包或者子包下面的java文件， 如果扫描到有Spring的相关注解的类，则把这些类注册为Spring的bean -->
+		<context:component-scan base-package="org.fkit.controller" />
+	
+		<!-- 视图解析器 -->
+		<bean id="viewResolver"
+			class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+			<!-- 前缀 -->
+			<property name="prefix">
+				<value>/WEB-INF/content/</value>
+			</property>
+			<!-- 后缀 -->
+			<property name="suffix">
+				<value>.jsp</value>
+			</property>
+		</bean>
 	
 	</beans>
 
