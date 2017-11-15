@@ -68,123 +68,250 @@ maven, spring 4.3.9
 	
 	</beans>
 
-代码3：DataBindingController.java
+代码3：FormController.java
 
-	/**
-	 * Controller注解用于指示该类是一个控制器，可以同时处理多个请求动作
-	 */
 	@Controller
-	public class DataBindingController {
+	public class FormController {
 	
-		// 静态的日志类LogFactory
-		private static final Log logger = LogFactory
-				.getLog(DataBindingController.class);
-	
-		// 测试@PathVariable注解
-		// 该方法映射的请求为http://localhost:8088/spring-mybatis-0304/{userId}
-		@RequestMapping(value = "/pathVariableTest/{userId}")
-		public void pathVariableTest(@PathVariable Integer userId) {
-			logger.info("通过@PathVariable获得数据： " + userId);
-		}
-	
-		// 测试@RequestHeader注解
-		// 该方法映射的请求为http://localhost:8088/spring-mybatis-0304/requestHeaderTest
-		@RequestMapping(value = "/requestHeaderTest")
-		public void requestHeaderTest(@RequestHeader("User-Agent") String userAgent,
-				@RequestHeader(value = "Accept") String[] accepts) {
-			logger.info("通过@requestHeaderTest获得数据： " + userAgent);
-			for (String accept : accepts) {
-				logger.info(accept);
-			}
-		}
-	
-		// 测试@CookieValue注解
-		@RequestMapping(value = "/cookieValueTest")
-		public void cookieValueTest(
-				@CookieValue(value = "JSESSIONID", defaultValue = "") String sessionId) {
-			logger.info("通过@requestHeaderTest获得数据： " + sessionId);
-		}
-	
-	}
-
-代码4：SessionAttributesController.java
-
-	/**
-	 * <pre>
-	 * Controller注解用于指示该类是一个控制器，可以同时处理多个请求动作
-	 * SessionAttributes将Model中的属性名为user的放入HttpSession对象当中
-	 * </pre>
-	 */
-	@Controller
-	@SessionAttributes("user")
-	public class SessionAttributesController {
-	
-		// 静态的日志类LogFactory
-		private static final Log logger = LogFactory
-				.getLog(SessionAttributesController.class);
-	
-		// 该方法映射的请求为http://localhost:8088/spring-mybatis-0304/{formName}
+		// 该方法映射的请求为http://localhost:8088/spring-mybatis-0305/{formName}
 		@RequestMapping(value = "/{formName}")
 		public String loginForm(@PathVariable String formName) {
-			logger.info("formName： " + formName);
 			// 动态跳转页面
 			return formName;
 		}
 	
-		// 该方法映射的请求为http://localhost:8088/spring-mybatis-0304/login
-		@RequestMapping(value = "/login")
-		public String login(@RequestParam("loginname") String loginname,
+	}
+
+
+代码4：ModelAttribute1Controller.java
+
+	@Controller
+	public class ModelAttribute1Controller {
+	
+		// 使用@ModelAttribute注释的value属性，来指定model属性的名称,model属性对象就是方法的返回值
+		@ModelAttribute("loginname")
+		public String userModel1(@RequestParam("loginname") String loginname) {
+			return loginname;
+		}
+	
+		@RequestMapping(value = "/login1")
+		public String login1() {
+			return "result1";
+		}
+	
+}
+
+代码5：ModelAttribute2Controller.java
+
+	@Controller
+	public class ModelAttribute2Controller {
+	
+		// model属性名称和model属性对象由model.addAttribute()实现，前提是要在方法中加入一个Model类型的参数。
+		// 注意：当URL或者post中不包含对应的参数时，程序会抛出异常。
+		@ModelAttribute
+		public void userModel2(@RequestParam("loginname") String loginname,
 				@RequestParam("password") String password, Model model) {
-			logger.info("loginname： " + loginname + ",password： " + password);
-			// 创建User对象，装载用户信息
-			User user = new User();
-			user.setLoginname(loginname);
-			user.setPassword(password);
-			user.setUsername("admin");
-			// 将user对象添加到Model当中
-			model.addAttribute("user", user);
-			return "welcome";
+			model.addAttribute("loginname", loginname);
+			model.addAttribute("password", password);
+		}
+	
+		@RequestMapping(value = "/login2")
+		public String login2() {
+			return "result2";
 		}
 	
 	}
 
 
-代码5：spring-mybatis-0304\src\main\webapp\index.jsp
+代码6：ModelAttribute3Controller.java
+
+	@Controller
+	public class ModelAttribute3Controller {
+	
+		// 静态List<User>集合，此处代替数据库用来保存注册的用户信息
+		private static List<User> userList;
+	
+		// UserController类的构造器，初始化List<User>集合
+		public ModelAttribute3Controller() {
+			super();
+			userList = new ArrayList<User>();
+			User user1 = new User("test", "123456", "测试用户");
+			User user2 = new User("admin", "123456", "管理员");
+			// 存储User用户，用于模拟数据库数据
+			userList.add(user1);
+			userList.add(user2);
+		}
+	
+		// 根据登录名和密码查询用户，用户存在返回包含用户信息的User对象，不存在返回null
+		public User find(String loginname, String password) {
+			for (User user : userList) {
+				if (user.getLoginname().equals(loginname)
+						&& user.getPassword().equals(password)) {
+					return user;
+				}
+			}
+			return null;
+		}
+	
+		// model属性的名称没有指定，它由返回类型隐含表示，如这个方法返回User类型，那么这个model属性的名称是user。
+		// 这个例子中model属性名称由返回对象类型隐含表示，model属性对象就是方法的返回值。它不需要指定特定的参数。
+		@ModelAttribute
+		public User userModel3(@RequestParam("loginname") String loginname,
+				@RequestParam("password") String password) {
+			return find(loginname, password);
+		}
+	
+		@RequestMapping(value = "/login3")
+		public String login3() {
+			return "result3";
+		}
+	
+	}
+
+代码7：ModelAttribute4Controller.java
+
+	@Controller
+	public class ModelAttribute4Controller {
+	
+		// 这时这个方法的返回值并不是表示一个视图名称，而是model属性的值，视图名称是@RequestMapping的value值。
+		// Model属性名称由@ModelAttribute(value=””)指定，相当于在request中封装了username（key）=admin（value）。
+		@RequestMapping(value = "/login4")
+		@ModelAttribute(value = "username")
+		public String login4() {
+			return "admin";
+		}
+	
+	}
+
+代码8：ModelAttribute5Controller.java
+
+	@Controller
+	public class ModelAttribute5Controller {
+	
+		// model属性名称就是value值即“user”，model属性对象就是方法的返回值
+		@ModelAttribute("user")
+		public User userModel5(@RequestParam("loginname") String loginname,
+				@RequestParam("password") String password) {
+			User user = new User();
+			user.setLoginname(loginname);
+			user.setPassword(password);
+			return user;
+		}
+	
+		// @ModelAttribute("user") User user注释方法参数，参数user的值来源于userModel5()方法中的model属性。
+		@RequestMapping(value = "/login5")
+		public String login5(@ModelAttribute("user") User user) {
+			user.setUsername("管理员");
+			return "result5";
+		}
+	}
+
+
+代码9：spring-mybatis-0305\src\main\webapp\index.jsp
 
 	<%@ page language="java" contentType="text/html; charset=UTF-8"
 		pageEncoding="UTF-8"%>
 	<!DOCTYPE html>
+	<html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>数据绑定测试</title>
+	<title>测试@ModelAttribute</title>
 	</head>
 	<body>
-		<h2>数据绑定测试</h2>
-		<a href="pathVariableTest/1">测试@PathVariable注解</a>
+		<h3>测试@ModelAttribute的不同用法</h3>
+		<a href="loginForm1">测试@ModelAttribute(value="")注释返回具体类的方法 </a>
 		<br>
 		<br>
-		<a href="requestHeaderTest">测试@RequestHeader注解</a>
+		<a href="loginForm2">测试@ModelAttribute注释void返回值的方法</a>
 		<br>
 		<br>
-		<a href="cookieValueTest">测试@CookieValue注解</a>
+		<a href="loginForm3">测试@ModelAttribute注释返回具体类的方法</a>
+		<br>
+		<br>
+		<a href="loginForm4">测试@ModelAttribute和@RequestMapping同时注释一个方法 </a>
+		<br>
+		<br>
+		<a href="loginForm5">测试@ModelAttribute注释一个方法的参数 </a>
 		<br>
 		<br>
 	</body>
 	</html>
 
 
-代码6：spring-mybatis-0304\src\main\webapp\WEB-INF\content\loginForm.jsp
+代码10：spring-mybatis-0305\src\main\webapp\WEB-INF\content\login4.jsp
 
 	<%@ page language="java" contentType="text/html; charset=UTF-8"
 		pageEncoding="UTF-8"%>
 	<!DOCTYPE html>
+	<html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>登录页面</title>
+	<title>测试@ModelAttribute和@RequestMapping同时注释一个方法</title>
 	</head>
 	<body>
-		<h3>测试@SessionAttributes注解</h3>
-		<form action="login" method="post">
+		访问request作用范围域中的username对象：${requestScope.username }
+		<br>
+		<br>
+	</body>
+	</html>
+
+代码11：spring-mybatis-0305\src\main\webapp\WEB-INF\content\loginForm1.jsp
+
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"%>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>测试@ModelAttribute</title>
+	</head>
+	<body>
+		<h3>测试@ModelAttribute(value="")注释返回具体类的方法</h3>
+		<form action="login1" method="post">
+			<table>
+				<tr>
+					<td><label>登录名: </label></td>
+					<td><input type="text" id="loginname" name="loginname"></td>
+				</tr>
+				<tr>
+					<td><input id="submit" type="submit" value="登录"></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+	</html>
+
+
+代码12：spring-mybatis-0305\src\main\webapp\WEB-INF\content\result1.jsp
+
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"%>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>测试@ModelAttribute(value="")注释返回具体类的方法</title>
+	</head>
+	<body>
+		访问request作用范围域中的loginname对象：${requestScope.loginname }
+		<br>
+		<br>
+	</body>
+	</html>
+
+代码13：spring-mybatis-0305\src\main\webapp\WEB-INF\content\loginForm2.jsp
+
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"%>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>测试@ModelAttribute</title>
+	</head>
+	<body>
+		<h3>测试@ModelAttribute注释void返回值的方法</h3>
+		<form action="login2" method="post">
 			<table>
 				<tr>
 					<td><label>登录名: </label></td>
@@ -203,18 +330,144 @@ maven, spring 4.3.9
 	</html>
 
 
-代码7：spring-mybatis-0304\src\main\webapp\WEB-INF\content\welcome.jsp
+代码14：spring-mybatis-0305\src\main\webapp\WEB-INF\content\result2.jsp
 
 	<%@ page language="java" contentType="text/html; charset=UTF-8"
 		pageEncoding="UTF-8"%>
 	<!DOCTYPE html>
+	<html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>测试@SessionAttributes注解</title>
+	<title>测试@ModelAttribute注释void返回值的方法</title>
+	</head>
+	<body>
+		访问request作用范围域中的loginname对象：${requestScope.loginname }
+		<br> 访问request作用范围域中的password对象：${requestScope.password }
+		<br>
+		<br>
+	</body>
+	</html>
+
+代码15：spring-mybatis-0305\src\main\webapp\WEB-INF\content\loginForm3.jsp
+
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"%>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>测试@ModelAttribute</title>
+	</head>
+	<body>
+		<h3>测试@ModelAttribute注释返回具体类的方法</h3>
+		<form action="login3" method="post">
+			<table>
+				<tr>
+					<td><label>登录名: </label></td>
+					<td><input type="text" id="loginname" name="loginname"></td>
+				</tr>
+				<tr>
+					<td><label>密码: </label></td>
+					<td><input type="password" id="password" name="password"></td>
+				</tr>
+				<tr>
+					<td><input id="submit" type="submit" value="登录"></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+	</html>
+
+代码16：spring-mybatis-0305\src\main\webapp\WEB-INF\content\result3.jsp
+
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"%>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>测试@ModelAttribute注释返回具体类的方法</title>
 	</head>
 	<body>
 		访问request作用范围域中的user对象：${requestScope.user.username }
-		<br> 访问session作用范围域中的user对象：${sessionScope.user.username }
+		<br>
+		<br>
+	</body>
+	</html>
+
+代码17：spring-mybatis-0305\src\main\webapp\WEB-INF\content\loginForm4.jsp
+
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"%>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>测试@ModelAttribute</title>
+	</head>
+	<body>
+		<h3>测试@ModelAttribute和@RequestMapping同时注释一个方法</h3>
+		<form action="login4" method="post">
+			<table>
+				<tr>
+					<td><label>登录名: </label></td>
+					<td><input type="text" id="loginname" name="loginname"></td>
+				</tr>
+				<tr>
+					<td><label>密码: </label></td>
+					<td><input type="password" id="password" name="password"></td>
+				</tr>
+				<tr>
+					<td><input id="submit" type="submit" value="登录"></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+	</html>
+
+
+代码18：spring-mybatis-0305\src\main\webapp\WEB-INF\content\loginForm5.jsp
+
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"%>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>测试@ModelAttribute</title>
+	</head>
+	<body>
+		<h3>测试@ModelAttribute注释一个方法的参数</h3>
+		<form action="login5" method="post">
+			<table>
+				<tr>
+					<td><label>登录名: </label></td>
+					<td><input type="text" id="loginname" name="loginname"></td>
+				</tr>
+				<tr>
+					<td><label>密码: </label></td>
+					<td><input type="password" id="password" name="password"></td>
+				</tr>
+				<tr>
+					<td><input id="submit" type="submit" value="登录"></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+	</html>
+
+代码19：spring-mybatis-0305\src\main\webapp\WEB-INF\content\result5.jsp
+
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"%>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>测试@ModelAttribute注释一个方法的参数</title>
+	</head>
+	<body>
+		访问request作用范围域中的user对象：${requestScope.user.username }
 		<br>
 		<br>
 	</body>
@@ -223,45 +476,30 @@ maven, spring 4.3.9
 访问截图1
 ----------
 
-[http://localhost:8088/spring-mybatis-0304/index.jsp](http://localhost:8088/spring-mybatis-0304/index.jsp)
+[http://localhost:8088/spring-mybatis-0305/](http://localhost:8088/spring-mybatis-0305)
 
-![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0304/snapshot/snap030401.png)
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030501.png)
 
-控制台信息
-----------
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030502.png)
 
-	0 [qtp1677921169-15] [INFO] - org.fkit.controller.DataBindingController 
-		-org.fkit.controller.DataBindingController.pathVariableTest(DataBindingController.java:25) 
-		-通过@PathVariable获得数据： 1
-	2462 [qtp1677921169-12] [INFO] - org.fkit.controller.DataBindingController 
-		-org.fkit.controller.DataBindingController.requestHeaderTest(DataBindingController.java:33) 
-		-通过@requestHeaderTest获得数据：
-	 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36
-	2462 [qtp1677921169-12] [INFO] - org.fkit.controller.DataBindingController 
-		-org.fkit.controller.DataBindingController.requestHeaderTest(DataBindingController.java:35) 
-		-text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
-	4553 [qtp1677921169-19] [INFO] - org.fkit.controller.DataBindingController 
-		-org.fkit.controller.DataBindingController.cookieValueTest(DataBindingController.java:43) 
-		-通过@requestHeaderTest获得数据： node0158rm9wjzcru7zo3ubdlyk7ff0.node0
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030503.png)
+
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030504.png)
+
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030505.png)
+
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030506.png)
+
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030507.png)
+
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030508.png)
+
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030509.png)
+
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030510.png)
+
+![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0305/snapshot/snap030511.png)
+
+
   
 
-访问截图2
-----------
-
-[http://localhost:8088/spring-mybatis-0304/loginForm](http://localhost:8088/spring-mybatis-0304/loginForm)
-
-![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0304/snapshot/snap030402.png)
-
-![](https://github.com/CoderDream/spring-mybatis/blob/master/spring-mybatis-0304/snapshot/snap030403.png)
-
-
-
-控制台信息
-----------
-
-	971224 [qtp1677921169-17] [INFO] - org.fkit.controller.SessionAttributesController 
-		-org.fkit.controller.SessionAttributesController.loginForm(SessionAttributesController.java:30) 
-		-formName： loginForm
-	989957 [qtp1677921169-19] [INFO] - org.fkit.controller.SessionAttributesController 
-		-org.fkit.controller.SessionAttributesController.login(SessionAttributesController.java:39) 
-		-loginname： test,password： 123456
