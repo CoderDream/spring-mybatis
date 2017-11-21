@@ -1,0 +1,109 @@
+/* Solarized for Google Code Prettify */
+.prettyprint {
+  color: #839496;
+  background-color: #002b36;
+}
+
+.prettyprint .pln {
+  color: inherit;
+}
+
+.prettyprint .str,
+.prettyprint .lit,
+.prettyprint .atv {
+  color: #D14; /*#2aa198*/
+}
+.prettyprint .kwd {
+  /*color: #268bd2;*/
+  color: #800080; /*#1e347b*/
+  font-weight: bold;
+}
+
+.prettyprint .com,.prettyprint .dec {
+  color: #008000; /*#586e75*/
+  font-style: italic;
+}
+
+.prettyprint .typ {
+  color: black; /*#b58900*/
+}
+
+.prettyprint .pun {
+  color: inherit;
+}
+
+.prettyprint .opn {
+  color: inherit;
+}
+
+.prettyprint .clo {
+  color: inherit;
+}
+
+.prettyprint .tag {
+  color: #268bd2;
+  font-weight: bold;
+}
+
+.prettyprint .atn {
+  color: inherit;
+}
+  
+.prettyprint {
+  padding: 1px; /* 原值：8px */
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+}
+.prettyprint.linenums {
+  -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+     -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+          box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+}
+
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums {
+  margin: 0 0 0 0px; /* IE indents via margin-left， margin: 0 0 0 33px;*/
+} 
+ol.linenums li {
+  padding-left: 12px; /* 原值：12px */
+  color: #bebec5;
+  line-height: 18px;
+  text-shadow: 0 1px 0 #fff;
+}
+code, pre {
+  padding: 0 3px 2px; /* 原值：padding: 0 3px 2px;*/
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-size: 12px;
+  color: #333333;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+code {
+  padding: 3px 4px;
+  color: #d14;
+  background-color: #f7f7f9;
+}
+pre {
+  display: block;
+  padding: 8.5px;/*原值：8.5*/
+  margin: 0 0 9px;
+  font-size: 12px;
+  line-height: 18px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+pre.prettyprint {
+  margin-bottom: 18px;
+}
+pre code {
+  padding: 0;
+  background-color: transparent;
+}

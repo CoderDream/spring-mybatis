@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<!-- 对web包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+	<context:component-scan base-package="com.olts.controller" />
+
+	<!-- 支持spring3.0以上新的mvc注解 -->
+	<mvc:annotation-driven />
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 如果想让拦截器只拦截某些URL的请求，可把拦截器配置到mvc:interceptor元素内 -->
+			<mvc:mapping path="*.do"/>
+			<mvc:exclude-mapping path="/user/login.do"/>
+			<bean class="com.olts.controller.SecureHandlerInterceptor"/>
+		</mvc:interceptor> 
+	</mvc:interceptors>
+	
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"/>
+		<property name="suffix" value=".jsp"/>
+		
+		<!-- 如果使用jstl的话，配置下面的属性 -->
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+	</bean>
+	
+	<!--  文件上件上传解析器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		 <property name="defaultEncoding" value="utf-8"/> <!-- 默认编码 (ISO-8859-1) -->  
+	    <property name="maxInMemorySize" value="10240"/> <!-- 最大内存大小 (10240)-->  
+	    <property name="uploadTempDir" value="/upload/"/> <!-- 上传后的目录名 (WebUtils#TEMP_DIR_CONTEXT_ATTRIBUTE) -->  
+	    <property name="maxUploadSize" value="-1"/> <!-- 最大文件大小，-1为无限止(-1) --> 
+	</bean>
+	
+	<!-- 全局异常处理 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!--  定义异常处理页面用来获取异常信息的变量名，默认名为exception, jsp可以访问这个变量${ex.message}-->
+        <property name="exceptionAttribute" value="ex"/>
+         <!--默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置-->
+         <property name="defaultErrorView" value="error"/>
+         <!--默认HTTP状态码-->
+         <property name="defaultStatusCode" value="500"/>
+        <!--定义需要特殊处理的异常，用类名或完全路径名作为key，异常页面名作为值-->
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.sql.SQLException">error_sql</prop>
+                <prop key="java.lang.Exception">error_ex</prop>
+            </props>
+        </property>
+        <property name="statusCodes">
+             <props>
+                 <prop key="error">500</prop>
+                 <prop key="404">404</prop>
+             </props>  
+         </property>
+    </bean>
+	
+	
+</beans>

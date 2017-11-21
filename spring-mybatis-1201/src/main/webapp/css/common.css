@@ -1,0 +1,36 @@
+body,html
+{
+	font-size:12px;
+	font-family:Calibri;
+	padding:0;
+	margin:0;
+	width: 100%;
+	height: 100%;
+}
+a img{
+	border:0px;
+}
+
+/*头部logo*/
+.divTop{
+	/*background:url(../images/logo.gif) no-repeat 20px center;*/
+	background:#7d9edb url(../images/bg1.gif) center top repeat-x;
+}
+.divTop span{
+	font-size:16px;
+}
+
+span.header-title{
+	color:palevioletred;
+	font-size:26px;
+	font-family:'方正舒体';
+	padding-left: 10px;
+}
+
+.divTop span.exit{
+	font-size:14px;
+	position:absolute; 
+	top:45px; 
+	margin-left:700px;
+}
+.divTop span.exit a{margin-left:10px; font-weight:bold; text-decoration:underline;}

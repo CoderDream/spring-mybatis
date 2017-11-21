@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.olts.mapper.SmdQuestionsMapper">
+
+	<!-- 写一个查询语句 ,mybatis有两种方式将查询结果映射为POJO(JavaBean)
+		1. 自动映射，这种方式必须要表的列名和POJO的属性名一致。
+		2. 通过<resultMap>元素进行映射（推荐用这种方式）
+	-->
+
+	<!-- 结果映射,所有的jdbcType指的都是java.sql.Types类中定义的常量 -->
+	<resultMap id="baseSmdQuestionsMap" type="smdQuestions">
+		<id property="id" column="ID" />
+		<result property="question" column="QUESTION" />
+		<result property="correct" column="CORRECT" />
+		<result property="questionType" column="QUESTION_TYPE" />
+		<result property="techCateId" column="TECH_CATE_ID" />
+		<result property="descrpt" column="DESCRPT" />
+		<result property="pubdate" column="PUBDATE" />
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

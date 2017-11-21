@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.olts.mapper.OltsScoreMapper">
+
+	<!-- 写一个查询语句 ,mybatis有两种方式将查询结果映射为POJO(JavaBean)
+		1. 自动映射，这种方式必须要表的列名和POJO的属性名一致。
+		2. 通过<resultMap>元素进行映射（推荐用这种方式）
+	-->
+
+	<!-- 结果映射,所有的jdbcType指的都是java.sql.Types类中定义的常量 -->
+	<resultMap id="baseOltsScoreResultMap" type="oltsScore">
+		<id property="id" column="ISCORD" />
+		<result property="score" column="SCORE" />
+		<result property="testDate" column="TEST_DATE" />
+		<result property="descrpt" column="DESCRPT" />
+		<result property="userId"  column="USER_ID"/>
+    	<result property="examNo"  column="EXAM_NO"/>
+		<result property="fspScore" column="FSP_SCORE" />
+		
+	</resultMap>
+	
+
+	
+		<resultMap type="oltsScore" id="extendBaseOltsScoreResultMap" extends="baseOltsScoreResultMap">
+
+		
+		 <association property="user" 
+		 		resultMap="com.olts.mapper.OltsUsersMapper.baseOltsUsersResultMap">
+		 </association>
+		<!--  
+		 <association property="exam" 
+		 		resultMap="com.olts.mapper.ExaminationMapper.baseExaminationResultMap">
+		 </association>
+		  -->
+		</resultMap>
+	
+	<select id="selectScoreAll"  parameterType="String" resultMap="extendBaseOltsScoreResultMap"  flushCache="false" useCache="true">
+		<!-- <include refid="base_emp_column"/> 
+			<include refid="com.lanqiao.mapper.DepartmentMapper.base_dept_column"/>
+		-->
+			select s.ISCORD,
+			s.SCORE,
+  		u.USER_NAME,
+  		u.GENDER,
+  		u.GRADUATE_SCHOOL,
+  		u.MARJOR,
+  		u.EDU_BACKGROUND
+      from olts_score s,olts_users u where s.USER_ID=u.ID and s.EXAM_NO=#{examNo}
+  
+	</select>
+	
+	<delete id="deleteScore" parameterType="oltsScore">
+		delete olts_score where id=#{id}
+	
+	</delete>
+	
+	<update id="updateScore" parameterType="oltsScore">
+		update olts_score set score=#{score} where user_id=#{userId} and exam_no=#{examNo}
+	</update>
+	
+	<!--  
+create table olts_score(
+    ISCORD    INTEGER                                
+	SCORE     NUMBER(4,1)  Y                         
+	TEST_DATE DATE         Y        sysdate          
+	DESCRPT   VARCHAR2(50) Y                         
+	USER_ID   INTEGER                                
+	EXAM_NO   VARCHAR2(20)                           
+	FSP_SCORE NUMBER(4,1)  Y  
+)
+	-->
+	<insert id="insertScore" parameterType="oltsScore">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select olts_score_seq.nextval from dual
+		</selectKey>
+		insert into olts_score(ISCORD,SCORE,USER_ID,EXAM_NO)
+			values(#{id,jdbcType=INTEGER},#{score,jdbcType=DOUBLE},#{userId,jdbcType=INTEGER},#{examNo,jdbcType=VARCHAR})
+	</insert>
+	
+</mapper>

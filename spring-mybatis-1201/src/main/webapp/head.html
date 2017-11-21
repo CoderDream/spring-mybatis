@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title></title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <script type="text/javascript" src="js/jquery-1.9.0.js"></script>
+<script type="text/javascript" src="js/jquery.hotkeys.min.js"></script>
+<script type="text/javascript">
+//禁止ctrl+s热键保存网页
+$(document).bind('keydown', 'ctrl+s',function (evt){
+    alert("滚！我知道你想干坏事！");
+    return false;
+});
+</script>
+  </head>
+  
+  <body oncontextmenu="return false">
+     <br>
+
+  </body>
+</html>

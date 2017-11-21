@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+ <tlib-version>1.1</tlib-version>
+ <short-name>p</short-name>
+ <uri>http://www.lanqiao.com/tag/page</uri>
+ <tag>
+  <description>分页标签</description>
+  <name>page</name>
+  <tag-class>com.olts.commons.PageTag</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <description>必须；分页Page Bean对象</description>
+   <name>page</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+  </attribute>
+  <attribute>
+   <description>必须；分页超连接的URL</description>
+   <name>url</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+  </attribute>
+  <attribute>
+   <description>可选；类样式名&lt;span ... styleClass="demo" &gt;  
+ 				&lt;a href="?"&gt;  ...   &lt;/a&gt;
+ 			&lt;/span&gt;</description>
+   <name>styleClass</name>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+  <attribute>
+   <description>可选；超连接的显示方式：text或 icon</description>
+   <name>displayStyle</name>
+   <rtexprvalue>false</rtexprvalue>
+  </attribute>
+ </tag>
+</taglib>

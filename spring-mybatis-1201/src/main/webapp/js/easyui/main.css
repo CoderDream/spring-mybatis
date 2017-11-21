@@ -1,0 +1,143 @@
+/**/
+body {
+	padding: 0;
+	margin: 0;
+	font: 12px/20px "微软雅黑", "宋体", Arial, sans-serif, Verdana, Tahoma;
+	background:#7d9edb url(../images/tabs/bg1.gif) center top repeat-x;
+}
+.layout-split-proxy-h{
+	position:absolute;
+	width:2px;
+	background:#888;
+	font-size:1px;
+	cursor:e-resize;
+	display:none;
+	z-index:5;
+}
+
+.layout-split-north{
+	border-bottom:5px solid #efefef;
+}
+.layout-split-south{
+	border-top:5px solid #efefef;
+}
+.layout-split-east{
+	border-left:0px solid #efefef;
+}
+.layout-split-west{
+	border-right:0px solid #efefef;
+}
+a:link {
+ text-decoration: none;
+}
+a:visited {
+ text-decoration: none;
+}
+a:hover {
+ text-decoration: underline;
+}
+a:active {
+ text-decoration: none;
+}
+.cs-north {
+	height:70px;/*原值：60px*/
+}
+.cs-north-bg {
+	width: 100%;
+	height: 100%;
+	background: url(themes/gray/images/header_bg.png) repeat-x;
+}
+.cs-north-logo {
+	height: 40px;
+	margin: 15px 0px 0px 5px;
+	display: inline-block;
+	color:#000000;font-size:22px;font-weight:bold;text-decoration:none
+}
+.cs-west {
+	width:170px;/*原值：200px*/
+	padding:0px;
+}
+.cs-navi-tab {
+	padding: 5px;
+}
+.cs-tab-menu {
+	width:120px;
+}
+.cs-home-remark {
+	padding: 10px;
+}
+.wrapper {
+    float: right;
+    height: 30px;
+    margin-left: 10px;
+}
+.ui-skin-nav {
+    float: right;
+	padding: 0;
+	margin-right: 10px;
+	list-style: none outside none;
+	height: 30px;
+}
+
+.ui-skin-nav .li-skinitem {
+    float: left;
+    font-size: 12px;
+    line-height: 30px;
+	margin-left: 10px;
+    text-align: center;
+}
+.ui-skin-nav .li-skinitem span {
+	cursor: pointer;
+	width:10px;
+	height:10px;
+	display:inline-block;
+}
+.ui-skin-nav .li-skinitem span.cs-skin-on{
+	border: 1px solid #FFFFFF;
+}
+.easyui-accordion div ul{
+	margin:5px 10px;
+	padding:0px;
+	
+}
+/*菜单项*/
+.easyui-accordion div ul li{
+	list-style-type: none;
+	line-height: 30px;
+}
+.easyui-accordion a img{
+	margin:0px;
+	padding:0px;
+	vertical-align: middle;
+}
+
+.logo-title{
+	position:relative;
+	margin:0;
+	padding:0;
+	font-size:20px;
+	font-style:italic;
+	font-weight:bold;
+	top:20px;
+	left:30px;
+	float: left;
+}
+.menu-bg,.top-bg,.welcome{
+	background-color:#f6f5ec;
+}
+/*
+.exit{
+	text-decoration:none;
+	font-size:13px;
+	color:#dedede;
+	position:relative;
+	top:30px; 
+	right:100px;
+	float:right;
+}
+.ui-skin-nav .li-skinitem span.gray{background-color:gray;}
+.ui-skin-nav .li-skinitem span.default{background-color:blue;}
+.ui-skin-nav .li-skinitem span.bootstrap{background-color:#D7EBF9;}
+.ui-skin-nav .li-skinitem span.black{background-color:black;}
+.ui-skin-nav .li-skinitem span.metro{background-color:#FFE57E;}
+*/

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.olts.mapper.ZyExaminationMapper" >
+
+  <resultMap id="BasezfResultMap" type="examination" >
+    <id column="EXAM_NO" property="examNo"  />
+    <!--   <result column="USER_ID" property="userId" />-->
+    <result column="EXAM_DATE" property="examDate"  />
+    <result column="SINGLE_ID" property="singleId"  />
+    <result column="MULTIPLE_ID" property="multpleId" />
+    <result column="TRUE_FALSE_ID" property="trueFalseId"  />
+    <result column="FILL_IN_GAPS_ID" property="fillInGapsId" />
+    <result column="SIMPLE_ANWSER_ID" property="simpleAnwserId" />
+    <result column="PROGRAM_ID" property="programId"  />
+    <result column="DESCRPT" property="descrpt"  />
+    <result column="VALID_FLAG" property="validFlag"  />
+    
+  </resultMap>
+  
+<resultMap type="oltsUsers" id="getUsers" >
+	  	<id column="ID" property="id" jdbcType="INTEGER" />
+    	<result column="USER_NAME" property="userName" jdbcType="VARCHAR"/>
+	  	
+	  	<collection property="answer" column="ID" ofType="fspAnswer" select="selectAnswer">
+	  		<id column="ID" property="id"/>
+	  	</collection>
+	   	<collection property="scores" column="ID" ofType="oltsScore" >
+	  		<id column="ID" property="id"/>
+	  		<result column="SCORE" property="score"/>
+	  	</collection>
+  </resultMap>
+  
+  <resultMap id="fspAnswerResultMap" type="fspAnswer">
+		<id column="ID" property="id"/>
+		<result column="ANSWER" property="answer" jdbcType="VARCHAR"/>
+		
+		<association property="fsp" column="ID" javaType="fspQuestions">
+    		<id column="ID" property="id"/>
+			<result column="question" property="question" jdbcType="VARCHAR"/>
+			<result column="question_type" property="questionType" jdbcType="VARCHAR"/>
+    	</association> 
+  </resultMap>
+	<resultMap type="oltsScore" id="oltsScoreResultMap">
+		<id column="ID" property="id"/>
+		<result column="score" property="score"/>
+	</resultMap>
+ 
+ <!-- 查询考卷表所有信息 -->
+  <select id="selectExaminationByValidFlag" resultMap="BasezfResultMap">
+  		select * from examination where VALID_FLAG = 1
+  </select>
+  
+  <select id="selectExaminationByPrimaryKey" resultMap="BasezfResultMap" parameterType="String">
+  		select * from examination where EXAM_NO=#{id}
+  </select>
+
+ 
+   
+  
+  <select id="selectAnswer" resultMap="fspAnswerResultMap" parameterType="int">
+  	select a.id     			a_id,
+	       a.answer     		a_answer,
+	       q.id					fsp_id,
+	       q.question   		question,
+	       q.question_type 		question_type
+  	from fsp_answer a
+  			left join fsp_questions q 
+  				on a.fsp_id=q.id
+  	where a.user_id=#{id}
+  	order by question_type
+  </select>
+ <!-- 查询试卷答案 -->
+   <select id="selectUserAnswertByExamNo" resultMap="getUsers" parameterType="String">
+		select 
+            a.*,
+            u.*,
+            o.score
+              from olts_users u, fsp_answer a,olts_score o
+     	where u.id=a.user_id and o.user_id=u.id and a.exam_no=#{id}
+  			order by  u.id
+  </select>
+  
+ 
+
+
+
+  
+</mapper>

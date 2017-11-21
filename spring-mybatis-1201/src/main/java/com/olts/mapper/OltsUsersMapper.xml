@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.olts.mapper.OltsUsersMapper">
+
+	<!-- 写一个查询语句 ,mybatis有两种方式将查询结果映射为POJO(JavaBean)
+		1. 自动映射，这种方式必须要表的列名和POJO的属性名一致。
+		2. 通过<resultMap>元素进行映射（推荐用这种方式）
+	-->
+
+	<!-- 结果映射,所有的jdbcType指的都是java.sql.Types类中定义的常量 -->
+	<resultMap id="baseOltsUsersResultMap" type="oltsUsers">
+		<id property="id" column="ID" />
+		<result property="stuNo" column="STU_NO" />
+		<result property="idCardNo" column="ID_CARD_NO" />
+		<result property="userName" column="USER_NAME" />
+		<result property="passWord" column="PASS_WORD" />
+		<result property="mobile" column="MOBILE" />
+		<result property="homeTel" column="HOME_TEL" />
+		<result property="homeAddr" column="HOME_ADDR" />
+		<result property="schAddr" column="SCH_ADDR" />
+		<result property="qq" column="QQ" />
+		<result property="email" column="EMAIL" />
+		<result property="userType" column="USER_TYPE" />
+		<result property="gender" column="GENDER" />
+		<result property="birthday" column="BIRTHDAY" />
+		<result property="nationPlace" column="NATION_PLACE" />
+		<result property="marjor" column="MARJOR" />
+		<result property="eduBackground" column="EDU_BACKGROUND" />
+		<result property="graduteSchool" column="GRADUATE_SCHOOL" />
+		<collection property="examinations" ofType="examination" 
+			resultMap="com.olts.mapper.ExaminationMapper.baseExaminationResultMap">
+		
+		</collection>
+		<collection property="scores" ofType="oltsScore"
+				resultMap="com.olts.mapper.OltsScoreMapper.baseOltsScoreResultMap">
+		</collection>
+	  	<!-- <collection property="answer" ofType="fspAnswer"
+			resultMap="com.olts.mapper.FspAnswerMapper.basefspAnswerResultMap">
+		</collection> -->
+		
+	</resultMap>
+	<!--  -->
+	<!-- <resultMap type="oltsUsers" id="extendbaseOltsUsersResultMap" extends="baseOltsUsersResultMap">
+		 <association property="answer" 
+		 		resultMap="com.olts.mapper.FspAnswerMapper.baseFspAnswerResultMap">
+		 </association>
+	</resultMap> -->
+	
+	
+	
+	
+	<insert id="savaUser" parameterType="oltsUsers">
+		<selectKey keyProperty="id" order="BEFORE" resultType="int">
+			select olts_users_seq.nextval from dual
+		</selectKey>
+		insert into lqolts.olts_users
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="id !=null">id,</if>
+			<if test="stuNo !=null">stu_no,</if>
+			<if test="idCardNo !=null">id_card_no,</if>
+			<if test="userName !=null">user_name,</if>
+			<if test="passWord !=null">pass_word,</if>
+			 <if test="gender !=null">gender,</if>
+			 <if test="birthday !=null">birthday,</if>
+			 <if test="mobile !=null">mobile,</if>
+			 <if test="qq !=null">qq,</if>
+			 <if test="email !=null">email,</if>
+			 <if test="nationPlace !=null">nation_place,</if>
+			 <if test="marjor !=null">marjor,</if>
+			 <if test="eduBackground !=null">edu_Background,</if>
+			 <if test="graduteSchool !=null">graduate_School,</if>
+			 <if test="homeTel !=null">home_tel,</if>
+			 <if test="homeAddr !=null">home_addr,</if>
+			 <if test="schAddr !=null">sch_addr,</if>
+			 <if test="userType !=null">user_type,</if>
+		</trim>
+		 
+		<trim prefix="values(" suffixOverrides="," suffix=")">
+			<if test="id !=null">#{id},</if>
+			<if test="stuNo !=null">#{stuNo},</if>
+			<if test="idCardNo !=null">#{idCardNo},</if>
+			<if test="userName !=null">#{userName},</if>
+			<if test="passWord !=null">#{passWord},</if>
+			 <if test="gender !=null">#{gender},</if>
+			 <if test="birthday !=null">#{birthday,jdbcType=DATE},</if>
+			 <if test="mobile !=null">#{mobile}, </if>
+			 <if test="qq !=null">#{qq},</if>
+			 <if test="email !=null">#{email},</if>
+			 <if test="nationPlace !=null">#{nationPlace},</if>
+			 <if test="marjor !=null">#{marjor},</if>
+			 <if test="eduBackground !=null">#{eduBackground},</if>
+			 <if test="graduteSchool !=null">#{graduteSchool},</if>
+			 <if test="homeTel !=null">#{homeTel},</if>
+			 <if test="homeAddr !=null">#{homeAddr},</if>
+			 <if test="schAddr !=null">#{schAddr},</if>
+			 <if test="userType !=null">#{userType},</if>
+		</trim>
+	</insert>
+	
+	<insert id="savaUser2" parameterType="java.util.List">
+		insert into olts_users(ID,STU_NO,ID_CARD_NO,USER_NAME,PASS_WORD,MOBILE,HOME_TEL,HOME_ADDR,SCH_ADDR,QQ,EMAIL,USER_TYPE,GENDER,BIRTHDAY,NATION_PLACE,MARJOR,EDU_BACKGROUND,GRADUATE_SCHOOL) 
+		<foreach collection="list" item="item" index="index" open="(" separator=" union all " close=")">
+			(select #{item.id},
+				#{item.stuNo},
+				#{item.idCardNo},
+				#{item.userName},
+				#{item.passWord},
+				#{item.mobile},
+				#{item.homeTel},
+				#{item.homeAddr},
+				#{item.schAddr},
+				#{item.qq},
+				#{item.email},
+				#{item.userType},
+				#{item.gender},
+				#{item.birthday},
+				#{item.nationPlace},
+				#{item.marjor},
+				#{item.eduBackground},
+				#{item.graduteSchool}
+			from dual)
+		</foreach>
+	</insert>
+	
+	<update id="updateUser" parameterType="oltsUsers">
+		update lqolts.olts_users set
+		<trim suffixOverrides=",">
+			 <if test="passWord !=null">
+			 	pass_word=#{passWord},
+			 </if>
+			 <if test="gender !=null">
+			 	gender=#{gender},
+			 </if>
+			 <if test="birthday !=null">
+			 	birthday=#{birthday},
+			 </if>
+			 <if test="mobile !=null">
+			 	mobile=#{mobile},
+			 </if>
+			 <if test="qq !=null">
+			 	qq=#{qq},
+			 </if>
+			 <if test="email !=null">
+			 	email=#{email},
+			 </if>
+			 <if test="nationPlace !=null">
+			 	nation_place=#{nationPlace},
+			 </if>
+			 <if test="marjor !=null">
+			 	marjor=#{marjor},
+			 </if>
+			 <if test="eduBackground !=null">
+			 	edu_Background=#{eduBackground},
+			 </if>
+			 <if test="graduteSchool !=null">
+			 	graduate_School=#{graduteSchool},
+			 </if>
+		 </trim>
+		  where id=#{id}
+	</update>
+	
+	<delete id="deleteUserByIdCard" parameterType="string">
+		delete lqolts.olts_users where id_card_no=#{idCardNo}
+	</delete>
+	
+	<select id="selectForLogin" resultMap="baseOltsUsersResultMap" parameterType="oltsUsers">
+		select * from lqolts.olts_users 
+			where
+			    USER_NAME=#{userName}
+				and PASS_WORD=#{passWord}
+	</select>
+	
+	<select id="findAll" resultMap="baseOltsUsersResultMap" parameterType="oltsUsers">
+		select * from lqolts.olts_users
+		<where>
+			 <if test="userName !=null">
+			 	<bind name="username" value="'%'+_parameter.getUserName()+ '%'"/>
+			 	and user_name like #{username}
+			 </if>
+			 <if test="gender !=null">
+			 	and gender=#{gender}
+			 </if>
+			 <if test="nationPlace !=null">
+			 	and nation_place=#{nationPlace}
+			 </if>
+			 <if test="marjor !=null">
+			 	<bind name="umajor" value="'%'+_parameter.getMarjor()+ '%'"/>
+			 	and marjor like #{umajor}
+			 </if>
+			 <if test="eduBackground !=null">
+			 	and edu_Background=#{eduBackground}
+			 </if>
+			 <if test="graduteSchool !=null">
+			 	and graduate_School=#{graduteSchool}
+			 </if>
+		</where> 
+		order by id
+	</select>
+	
+	<select id="findByIdCard" resultMap="baseOltsUsersResultMap" parameterType="string">
+		select * from lqolts.olts_users 
+				where ID_CARD_NO=#{idCardNo}
+	</select>
+	
+
+	
+	
+</mapper>

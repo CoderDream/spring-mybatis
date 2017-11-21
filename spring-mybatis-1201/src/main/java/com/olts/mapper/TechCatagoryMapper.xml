@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.olts.mapper.TechCatagoryMapper">
+
+	<!-- 写一个查询语句 ,mybatis有两种方式将查询结果映射为POJO(JavaBean)
+		1. 自动映射，这种方式必须要表的列名和POJO的属性名一致。
+		2. 通过<resultMap>元素进行映射（推荐用这种方式）
+	-->
+
+	<!-- 结果映射,所有的jdbcType指的都是java.sql.Types类中定义的常量 -->
+	<resultMap id="baseTechCatagoryResultMap" type="techCatagory">
+		<id property="id" column="id" javaType="integer" jdbcType="INTEGER"/>
+		<result property="techCtgr" column="tech_ctgr" jdbcType="VARCHAR"/>
+		<association property="oltscatagory" 
+		 		resultMap="com.olts.mapper.OltsCatagoryMapper.baseOltsCatagoryResultMap">
+		 </association>
+	</resultMap>
+	<select id="selectAllTech" resultMap="baseTechCatagoryResultMap">
+		select * from tech_category where course_id=#{oltscatagory.id}
+	</select>
+	
+	<insert id="insertTech" parameterType="techCatagory">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+	    	select tech_category_seq.nextval from dual
+	  	</selectKey>
+	  	insert into tech_category values(#{id},#{techCtgr,jdbcType=VARCHAR},#{oltscatagory.id,jdbcType=INTEGER})
+	</insert>
+	
+	<delete id="removeTech" parameterType="techCatagory">
+		delete tech_category where id=#{id}
+	</delete>
+	
+	<update id="updateTech" parameterType="techCatagory">
+		update tech_category
+		<set>
+			<if test="techCtgr != null">
+				tech_ctgr=#{techCtgr}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.olts.mapper.FspAnswerMapper">
+
+	<!-- 结果映射,所有的jdbcType指的都是java.sql.Types类中定义的常量 -->
+	<resultMap id="baseFspAnswerResultMap" type="fspAnswer">
+		<id property="id" column="ID" />
+		<result property="answer" column="ANSWER" />
+		
+	</resultMap>
+	
+	<resultMap type="fspAnswer" id="extendBaseFspAnswerResultMap" extends="baseFspAnswerResultMap">
+		
+		 <association property="user" 
+		 		resultMap="com.olts.mapper.OltsUsersMapper.baseOltsUsersResultMap">
+		 </association>
+		
+		 <association property="exam" 
+		 		resultMap="com.olts.mapper.ExaminationMapper.baseExaminationResultMap">
+		 </association>
+		
+		  
+		 <association property="fsp" 
+		 		resultMap="com.olts.mapper.FspQuestionsMapper.baseFspQuestionsResultMap">
+		 </association>
+		
+		</resultMap>
+		
+ <!-- 查询试卷答案 wufeng-->
+	<select id="selectUserAnswertByExamNo" resultMap="baseFspAnswerResultMap" parameterType="String">
+		select a.user_id u,a.answer,a.fsp_id,a.exam_no,u.id
+        	from olts_users u, fsp_answer a
+     				where u.id=a.user_id and a.exam_no=#{examNo}
+  			order by  u.id
+  			
+  </select>
+	<insert id="insertAnswer" parameterType="fspAnswer" flushCache="true">
+  	<selectKey keyProperty="id" resultType="int" order="BEFORE">
+	    select fsp_answer_seq.nextval from dual
+	</selectKey>
+	insert into fsp_answer(ID,answer,fsp_id,exam_no,user_id)
+	values
+	(#{id,jdbcType=INTEGER},#{answer,jdbcType=CLOB},
+	#{fsp.id,jdbcType=INTEGER},#{exam.examNo,jdbcType=VARCHAR},#{user.id,jdbcType=INTEGER})
+  </insert>
+	
+</mapper>

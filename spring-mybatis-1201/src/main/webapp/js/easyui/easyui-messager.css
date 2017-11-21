@@ -1,0 +1,27 @@
+/**/
+.prompt-box div{
+	float: left;
+	height:31px;
+	border: 0px;
+}
+.info-icon {
+	width: 33px;
+	background: url('themes/icons/gb_tip_layer.png') -22px -65px no-repeat;
+	margin-left: 10px;
+}
+.success-icon {
+	width: 33px;
+	background: url('themes/icons/gb_tip_layer.png') -22px -12px no-repeat;
+	margin-left: 10px;
+}
+.error-icon {
+	width: 33px;
+	background: url('themes/icons/gb_tip_layer.png') -22px -116px no-repeat;
+	margin-left: 10px;
+}
+.prompt-msg{
+	padding-top:7px;
+	font-size: 12px;
+	font-weight: bold;
+	color:blue;
+}

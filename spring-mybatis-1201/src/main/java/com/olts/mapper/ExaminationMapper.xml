@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.olts.mapper.ExaminationMapper">
+
+	<!-- 写一个查询语句 ,mybatis有两种方式将查询结果映射为POJO(JavaBean)
+		1. 自动映射，这种方式必须要表的列名和POJO的属性名一致。
+		2. 通过<resultMap>元素进行映射（推荐用这种方式）
+	-->
+
+	<!-- 结果映射,所有的jdbcType指的都是java.sql.Types类中定义的常量 -->
+	<resultMap id="baseExaminationResultMap" type="examination">
+		<id property="examNo" column="EXAM_NO" />
+		 
+		<result property="examDate" column="EXAM_DATE" />
+		<result property="singleId" column="SINGLE_ID" />
+		<result property="multpleId" column="multiple_id" />
+		<result property="trueFalseId" column="TRUE_FALSE_ID" />
+		<result property="fillInGapsId" column="FILL_IN_GAPS_ID" />
+
+		<result property="simpleAnwserId" column="simple_anwser_id" />
+
+	
+
+		<result property="programId" column="PROGRAM_ID" />
+		<result property="descrpt" column="DESCRPT" />
+		<result property="validFlag" column="VALID_FLAG" />
+		
+	</resultMap>
+	  
+	<resultMap type="examination" id="extendbaseExaminationResultMap" extends="baseExaminationResultMap">
+		
+		 <association property="user" 
+		 		resultMap="com.olts.mapper.OltsUsersMapper.baseOltsUsersResultMap">
+		 </association>
+		
+	</resultMap>
+	
+	<select id="selectExaminaton" resultMap="baseExaminationResultMap">
+		select e.*,rownum from examination e where <![CDATA[rownum<=10]]> order by exam_date desc
+	
+	</select>
+	<select id="selectExam" resultMap="baseExaminationResultMap" parameterType="string">
+	 	select EXAM_NO,USER_ID,EXAM_DATE,SINGLE_ID,MULTIPLE_ID,TRUE_FALSE_ID,FILL_IN_GAPS_ID,SIMPLE_ANWSER_ID,PROGRAM_ID,DESCRPT,VALID_FLAG
+	 	 from lqolts.examination
+	 		where exam_no=#{examNo} 			
+	</select>
+	<select id="selectFspQuestion" resultMap="com.olts.mapper.FspQuestionsMapper.baseFspQuestionsMap" parameterType="string">
+		select * from lqolts.fsp_questions
+			where id=#{id}
+	</select>
+	<select id="selectSmdQuestion" resultMap="com.olts.mapper.SmdQuestionsMapper.baseSmdQuestionsMap" parameterType="string">
+		select * from lqolts.smd_questions
+			where id=#{id}
+	</select>
+	
+	<update id="updateExamination"  parameterType="examination">
+		update examination 
+		 <trim prefix="set" suffixOverrides=",">
+		 	<if test="singleId != null">single_id=#{singleId},</if>
+			<if test="multpleId != null">multiple_id=#{multpleId},</if>
+			<if test="trueFalseId != null">true_false_id=#{trueFalseId},</if>
+			<if test="fillInGapsId != null">fill_in_gaps_id=#{fillInGapsId},</if>
+			<if test="simpleAnwserId != null">simple_anwser_id=#{simpleAnwserId},</if>
+			<if test="programId != null">program_id=#{programId},</if>
+			<if test="validFlag != null">VALID_FLAG=#{validFlag},</if>
+		 </trim>
+		where exam_no=#{examNo}
+	</update>
+	<insert id="insertAnswer" parameterType="fspAnswer" flushCache="true">
+  	<selectKey keyProperty="id" resultType="int" order="BEFORE">
+	    select fsp_answer_seq.nextval from dual
+	</selectKey>
+	insert into fsp_answer(ID,answer,fsp_id,exam_no,user_id)
+	values
+	(#{id},#{answer},#{fspAnswer.getFsp().id},#{fspAnswer.getExam().examNo},#{fspAnswer.getUser().id})
+  </insert>
+	
+	
+	
+</mapper>

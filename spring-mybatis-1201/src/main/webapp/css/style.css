@@ -1,0 +1,428 @@
+body,html
+{
+	font-size:12px;
+	font-family:Calibri;
+	padding:0;
+	margin:0;
+	width: 100%;
+	height: 100%;
+}
+fieldset{
+	border:1px gray solid;
+}
+legend{
+	color:blue;
+	font-size:13px;
+	font-style: italic;
+}
+div {
+	margin: 0px;
+	padding: 0px;
+}
+div label{
+	font-weight: bold;
+}
+div.divMain{
+	margin-top:10px;
+	margin-left: 100px;
+}
+.main_body{
+	background-color: azure;
+}
+/*登页面样式*/
+#login_h{
+	width:100%;
+	height:200px;
+	background: url(../images/header.png) no-repeat center top;
+}
+#login_m{
+	font-size:14px;
+	font-family:Calibri;
+	font-weight:bold;
+	color:#0099FF;
+	width:100%;
+	height: 190px;
+	background-color: #FFF;
+	z-index: 1;
+}
+#login_m ul{
+	text-align: left;
+	/*margin-left: 40px;*/
+}
+#login_m li{
+	list-style-type: none;
+	line-height: 35px;
+	border: 0px solid;
+}
+#login_m li label{
+	font-size: 11px;
+	font-weight: normal;
+	color: blue;
+	margin-left: 5px;
+}
+#login_m li label:hover{ cursor: hand;}
+
+#login_f{
+	width:100%;
+	/*height:178px;*/
+	border:1px so red;
+	background: url(../images/footer.png) no-repeat center;
+}
+
+.button_bar{
+	margin-bottom:-2px;
+	text-align: right;
+	margin-bottom: 1px;
+}
+.button_bar_btnText{
+	font-weight: bold;
+}
+
+/*小尺寸按钮*/
+.button_b_s,.button_r_s,.button_g_s,.button_y_s,.button_h_s{
+	width:40px; 
+	height:25px; 
+	line-height:25px;
+	text-align:center;
+	font-weight:bold;
+	border:0px; 
+	cursor:pointer; 
+	background-color:Transparent; 
+	color:#fff;
+}
+.button_b_s{ background-image:url(../images/button_b_s.png);}
+.button_g_s{ background-image:url(../images/button_g_s.png);}
+.button_y_s{ background-image:url(../images/button_y_s.png);}
+.button_h_s{ background-image:url(../images/button_h_s.png); color:#ececec;}
+.button_r_s{ background-image:url(../images/button_r_s.png);}
+.button_b_s:hover{background-image:url(../images/button_r_s.png);}
+.button_g_s:hover{background-image:url(../images/button_r_s.png);}
+
+/*中等尺寸按钮*/
+.button_b,.button_r,.button_g,.button_y,.button_h{
+	width:64px; 
+	height:25px; 
+	line-height:25px; 
+	text-align:center; 
+	font-weight:bold;
+	border:0px; 
+	cursor:pointer;
+	background-color:Transparent; 
+	color:#fff;
+}
+.button_b{ background-image:url(../images/button_b.png); }
+.button_g{ background-image:url(../images/button_g.png);}
+.button_y{ background-image:url(../images/button_y.png);}
+.button_h{ background-image:url(../images/button_h.png); color:#ececec;}
+.button_r{ background-image:url(../images/button_r.png);}
+.button_b:hover{ background-image:url(../images/button_r.png);}
+
+/*大尺寸按钮*/
+.button_b_b,.button_r_b,.button_g_b,.button_y_b,.button_h_b{
+	width:85px; 
+	height:25px; 
+	line-height:25px;
+	text-align:center;
+	font-weight:bold;
+	border:0px; 
+	cursor:pointer; 
+	background-color:Transparent;
+	color:#fff;
+}
+.button_b_b{ background-image:url(../images/button_b_b.png);}
+.button_g_b{ background-image:url(../images/button_g_b.png);}
+.button_y_b{ background-image:url(../images/button_y_b.png);}
+.button_h_b{ background-image:url(../images/button_h_b.png); color:#ececec;}
+.button_r_b{ background-image:url(../images/button_r_b.png);}
+.button_b_b:hover{background-image:url(../images/button_r_b.png);}
+
+.button_submit{
+	width:25px; 
+	height:25px;
+	border:0px; 
+	cursor:pointer;
+	background-color:Transparent;
+	background:url(../images/table/save.png) no-repeat;
+}
+
+input.btn_b_b{
+	width:85px; 
+	height:25px; 
+	line-height:25px;
+	text-align:center;
+	border:0px; 
+	cursor:pointer; 
+	color:#fff;
+	background-image:url(../images/button_b_b.png);
+}
+input.btn_b_b:hover{background-image:url(../images/button_r_b.png);}
+
+/*圆角边框*/
+input.border-radius{
+	border:1px solid #d3d7d4;/*乳白色*/
+	border-radius:8px;	 	/*圆角的弧度*/
+	-moz-border-radius:8px;/*old Firefox */
+	height:18px;
+	font-family:"Times New Roman", Times, serif;
+	font-size:14px;
+}
+
+/*维护考卷->“移除本题”按钮*/
+.exam-btn-del{width:87px;color:#ef4136;}
+
+/* ------------------- 新增选择题页面样式 ------------------------*/
+div.question{
+	margin-left: 80px;
+}
+/*选择题主体*/
+div.quest_body{
+	text-align: left;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+/*选择题选项*/
+#optionTbl{
+	margin-left: 0px;
+	margin-top: 10px;
+}
+#optionTbl tr td:first-child{
+	font-size: 15px;
+	font-weight: bold;
+	font-style: italic;
+	text-align: right;
+	padding-right: 0px;
+	width:30px;
+}
+#optionTbl tr td:last-child{
+	text-align: center;
+}
+
+/*------------------------------- 选择题列表页面样式 ---------------------------*/
+/*查询试题按钮*/
+.list-query-button{
+	float:left;
+	margin-left: 200px;
+	margin-top: 15px;
+	margin-bottom: 5px;
+}
+.listDiv{
+	margin-top:5px;
+	border:0px solid gray;
+	/*width: 100%;*/
+	
+}
+.radio_list{
+	font-size:14px;
+	font-family:'宋体';
+	width: 900px;
+	padding-bottom:10px;
+	word-wrap:break-word;/* Internet Explorer 5.5+ */ 
+	overflow:auto;
+}
+/*单选题题目*/
+.radio_list_body{
+	font-weight:bold;
+	width: 897px;
+}
+#questionBody{
+	padding-right:5px;
+	text-decoration: none;
+	white-space:pre-wrap;/* Firefox */
+}
+#questionBody:hover{
+	cursor: hand;
+}
+/*单选题选项列表*/
+.radio_list_options{
+	/*background-color: aquamarine;*/
+}
+.radio_list_options ul{
+	width: 800px;
+	list-style-type: upper-alpha;
+	list-style-position:inside;
+	/*background-color: aquamarine;*/
+	padding-left: 40px;
+}
+.radio_list_options ul li{
+	line-height:25px;
+	white-space:pre-wrap;
+}
+
+/*选择题标准答案*/
+.answer{
+	font-size:14px;
+	font-weight: bold;
+	height:30px;
+	color:red;	
+	padding-left: 40px;
+}
+.ans{
+	font-size:14px;
+	font-weight: bold;
+	height:30px;
+	color:black;	
+	padding-left: 40px;
+}
+
+/*添加试题到考卷：考卷编号输入框*/
+.add_exam{
+	padding-left: 2px;
+}
+.add_exam label{
+	margin-left:2px;
+	font-size: 12px;
+	font-weight: bold;
+}
+/*展开、收起选项块*/
+.collapse_expand{
+	margin-left:3px;
+	margin-right:10px;
+	font-size: 18px;
+	color:blue;
+	cursor: hand;
+}
+.examno_title{
+	font-size:15px;
+	font-weight:bold;
+	text-align: center;
+	padding-right: 10px;
+	color:blue;
+}
+.examno_desc{
+	font-size:15px;
+	font-weight:bold;
+	color:red;
+	text-decoration:underline;
+}
+.exam_answers{
+	font-size:17px;
+	padding-right:3px;
+}
+.pick{ color:red; font-weight:bold; background-color:khaki; }
+.invalid_error{
+	width:550px;
+	text-align: center;
+	padding-bottom: 5px;
+	padding-top: 0px;
+	margin-top: -10px;
+}
+/*问答题标准答案*/
+.sa_stdAnwser{
+	/*background-color: aquamarine;*/
+	padding-left:2px;
+	padding-top:2px;
+	padding-bottom:2px;
+	margin-left:10px;
+	overflow:auto;
+}
+.sa_stdAnwser_pre{
+	padding-left:5px;
+}
+.sa_stdAnwser_title{
+	margin-left:10px;
+	color:red;
+}
+#messageDiv{
+	margin-left:70px;
+	margin-top: 10px;
+	font-size:13px;
+	color:red;
+}
+/*说明信息*/
+#explainDiv{
+	font-size: 15px;
+	color: red;
+	margin-top: 10px;
+}
+/*数据列表中的输入框*/
+.listData_input{
+	border: 2px solid #FF9999;
+	background-color: #FFFF99;
+}
+.listSelectItem{
+	list-style-type: decimal;
+	font-size: 11px;
+	background-color: azure;
+}
+.rmdListData_button{
+	font-size: 11px;
+}
+.catagoryMsg{
+	color: red;
+	font-style: italic;
+	font-weight: normal;
+}
+/**/
+.student {
+	color:blue;
+	height: 22px;
+}
+/*斑马线*/
+.odd{
+	background-color: peachpuff;
+}
+.even{
+	background-color: lavender;
+}
+.highlight{
+	background-color: aquamarine;
+}
+
+/*1像素细边框*/
+.table-border-1px{
+	border-collapse:collapse;border:1px solid #ddd;
+}
+.table-border-1px  th,.table-border-1px  td{
+	border:1px solid #ddd;
+}
+
+/*表格数据列表*/
+.data_list_thead{
+	height: 30px;
+	background-color:#339999;
+}
+.data_list th td{
+	text-align: center;
+}
+.cata_list_table{
+	border:1px gray solid;
+}
+.text_number{
+	font-size: 14px;
+}
+
+/*考卷的“简答题”和“编程题”题目*/
+.pre_body{
+	font-size:13px;
+	color:blue;
+	display:inline;
+	margin-top:0px;
+	padding-top:0px;
+	background-color:azure;
+ 	border: 0px;
+	overflow:auto;
+}
+.exam_prog_quest_textarea,.stu_prog_answer{
+	width:970px;
+}
+/*答对题数*/
+.right-count{
+	list-style:decimal;
+	font-size:15px;
+	margin-left:30px;
+	color: red;
+}
+/*学生编程题答案*/
+.student-short-answer,.student-program-answer{
+	font:12px;
+	color:black;
+	margin-left:2px;
+	word-wrap:break-word;/* Internet Explorer 5.5+ */ 
+	word-spacing:pre-wrap;/* Firefox */
+	overflow: auto;
+}
+/*复选框尺寸*/
+.chk-box{
+	width: 16px; height: 16px; padding: 0 10px 0 0;
+}
+
