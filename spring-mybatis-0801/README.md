@@ -18,7 +18,9 @@ maven, spring 4.3.9
 <!-- namespace指用户自定义的命名空间。 -->
 <mapper namespace="org.fkit.mapper.UserMapper">
 
-	<!-- id="save"是唯一的标示符 parameterType属性指明插入时使用的参数类型 useGeneratedKeys="true"表示使用数据库的自动增长策略 -->
+	<!-- id="save"是唯一的标示符 -->
+	<!-- parameterType属性指明插入时使用的参数类型 -->
+	<!-- useGeneratedKeys="true"表示使用数据库的自动增长策略 -->
 	<insert id="save" parameterType="org.fkit.domain.User"
 		useGeneratedKeys="true">
 		INSERT INTO TB_USER(name,sex,age)
