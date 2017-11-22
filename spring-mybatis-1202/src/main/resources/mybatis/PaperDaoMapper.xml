@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="zhaojin.dao.PaperDao">
+	<select id="getPaperInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		select paperID,fullScore,DATE_FORMAT(paperTime,'%Y-%m-%d %H:%i:%s') paperTime ,validateTime,paperName,byUser,DATE_FORMAT(available,'%Y-%m-%d %H:%i:%s') available  from paper where 1=1 
+		<if test="byUser != null and byUser !=''">
+			and byUser  like ${byUser}
+		</if>
+		<if test="paperName != null and paperName !=''">
+			and paperName like ${paperName}
+		</if>
+		<if test="paperId != null and paperId !=''">
+			and paperID = #{paperId}
+		</if>
+		<if test="now != null and now != ''">
+			and #{now} &gt;= available 
+			AND paperID NOT IN 
+		(SELECT paperID FROM studscore WHERE optID = #{optID})
+		</if>
+		<if test="now2 != null and now2 != ''">
+			and #{now2} &lt;= available 
+			AND paperID NOT IN 
+		(SELECT paperID FROM studscore WHERE optID = #{optID})
+		</if>
+		<if test="startrum != null ">
+			limit #{startrum},#{size}
+		</if>
+	</select>
+	<select id="getPaperCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from paper where 1=1 
+		<if test="paperId != null and paperId !=''">
+			and paperID = #{paperId}
+		</if>
+	</select>
+	<select id="getPaperDetailInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from paperdetail where 1=1 
+		<if test="paperId != null and paperId !=''">
+			and paperID  = #{paperId}
+		</if>
+	</select>
+	
+	
+	<delete id="delPaper" parameterType="java.util.Map">
+		DELETE FROM paper WHERE paperID = #{paperId}
+	</delete>
+	<delete id="delPaperDetail" parameterType="java.util.Map">
+		DELETE FROM paperdetail WHERE paperID = #{paperId}
+	</delete>
+	<select id="getAllpaperDetailIdByPaperId" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from paperdetail where paperID = #{paperId}
+		<if test="questID != null and questID !=''">
+			and questID  = #{questID}
+		</if>
+	</select>
+	<delete id="delStudScoreDetailByPaperId" parameterType="java.util.Map">
+		DELETE FROM studscoredetail WHERE paperDetailID = #{paperDetailID}
+	</delete>
+	<delete id="delPaperQuest" parameterType="java.util.Map">
+		DELETE FROM paperdetail WHERE paperID = #{paperId} and questID = #{questId}
+	</delete>
+	
+	
+	<insert id="addPaperQuest" parameterType="java.util.Map">
+		INSERT INTO paperdetail (paperID,questID ) VALUES (#{paperId},#{questId})
+	</insert>
+	<insert id="addPaper" parameterType="java.util.Map">
+		insert into paper (fullScore,paperTime,validateTime,paperName,byUser,available) values(#{fullScore},STR_TO_DATE(#{paperTime}, '%Y-%m-%d %h:%i:%s'),#{validateTime},#{paperName},#{byUser},STR_TO_DATE(#{available}, '%Y-%m-%d %h:%i:%s'))	
+	</insert>
+	<insert id="addPaperDetail" parameterType="java.util.Map">
+		<selectKey keyProperty="paperId" resultType="int" order="BEFORE">
+			SELECT MAX(paperID) FROM paper
+		</selectKey>
+		insert into paperdetail (paperID,questID) values (#{paperId},#{questId})
+	</insert>
+	
+	<update id="updatePaperInfo" parameterType="java.util.Map">
+		UPDATE paper SET fullScore = #{fullScore},paperName = #{paperName},validateTime = #{validateTime} where paperID = #{paperId}
+	</update>
+</mapper>

@@ -1,0 +1,54 @@
+*{font-size:12px; font-family:Tahoma,Verdana,΢���ź�,������}
+a{ color:Black; text-decoration:none;}
+a:hover{ color:Red; text-decoration:underline;}
+.textbox03 {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,����;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;  font-weight: bold; width: 190px; }
+
+.txt01{font:Verdana, Geneva, sans-serif,����;padding:3px 2px 2px 2px; border-width:1px; border-color:#ddd;  color:#000;}
+.txt {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,����;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;}
+.footer{text-align:center;color:#15428B; margin:0px; padding:0px;line-height:23px; font-weight:bold;}
+
+.head a{color:White;text-decoration:underline;}
+
+.easyui-accordion ul{list-style-type:none;margin:0px; padding:1px;}
+.easyui-accordion ul li{ padding:0px;}
+.easyui-accordion ul li a{line-height:24px;}
+.easyui-accordion ul li div{margin:2px 0px;padding-left:2px;padding-top:2px;padding-bottom: 6px;}
+.easyui-accordion ul li div.hover{border:1px dashed #99BBE8; background:#E0ECFF;cursor:pointer;}
+.easyui-accordion ul li div.hover a{color:#416AA3;}
+.easyui-accordion ul li div.selected{border:1px solid #99BBE8; background:#E0ECFF;cursor:default;}
+.easyui-accordion ul li div.selected a{color:#416AA3; font-weight:bold;}
+
+
+.easyui-accordion div ul li span.hover{border:1px dashed #99BBE8; background:#E0ECFF;cursor:pointer;}
+.easyui-accordion div ul li span.hover a{color:#416AA3;}
+.easyui-accordion div ul li span.selected{border:1px solid #99BBE8; background:#E0ECFF;cursor:default;}
+.easyui-accordion div ul li span.selected a{color:#416AA3; font-weight:bold;}
+
+.icon-sys{ background:url(../images/directory.png) no-repeat;}
+.icon-users{ background:url(../images/user_menu.png) no-repeat;}
+.icon-role{ background:url(../images/menus/system/role_menu.png) no-repeat;}
+.icon-archive{ background:url(../images/menus/archive/archives.gif) no-repeat;}
+.icon-setting{ background:url(../images/menus/setting.png) no-repeat;}
+.icon-desktop{ background:url(../images/menus/system/company_menu.png) no-repeat;}
+.icon-resetpwd{ background:url(../images/menus/book_key.png) no-repeat;}
+.icon-vixtel{ background:url(../images/logo.ico) no-repeat;}
+
+.loginbody{background: url(../images/content_bg.png) repeat center 0} 
+
+
+.icon-report{ background:url(../images/menus/system/report_menu.png) no-repeat;}
+.icon-sjzl{ background:url(../images/icons/window_gear.png) no-repeat;}
+.icon-menu{ background:url(../images/menus/system/company_menu.png) no-repeat;}
+.icon-excel{ background:url(../images/icons/page_excel.png) no-repeat;}
+
+.icon-percent{ background:url(../images/symbol_percent.png) no-repeat;}
+.icon-sum{ background:url(../images/symbol_sum.png) no-repeat;}
+.icon-equalizer{ background:url(../images/menus/personal/dutyStats.png) no-repeat;}
+.icon-map{ background:url(../images/icons/map_magnify.png) no-repeat;}
+
+.icon-err{ background:url(../../resource/image/icon/error.png) no-repeat;}
+
+.icon-add2{ background:url(../../resource/image/icon/add2.png) no-repeat;}
+
+
+

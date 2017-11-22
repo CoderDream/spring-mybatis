@@ -1,0 +1,139 @@
+/* 地图外框DIV样式 */
+.center_div{
+   style="height: 100%; width: 100%; margin: 0; padding: 0;"
+}
+
+/* 地图悬浮按钮样式 */
+.btnDiv_Seach {
+    float: left;
+    color: #ffffff;
+    margin: 4px 0px;
+    margin-right: 1px;
+    padding-top: 4px;
+    padding-bottom: 1px;
+    padding-left: 6px;
+    padding-right: 6px;
+    display: inline-block;
+    background-color: #FF9900;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 3px;
+    cursor: pointer;
+    top: 28px;
+    float: right;
+    right: 48px;
+    height: 22px;
+    position: absolute;
+    z-index: 9999;
+}
+
+/* 地图悬浮按钮样式 */
+.btnDiv_Edit {
+    float: left;
+    color: #ffffff;
+    margin: 4px 0px;
+    margin-right: 1px;
+    padding-top: 4px;
+    padding-bottom: 1px;
+    padding-left: 6px;
+    padding-right: 6px;
+    display: inline-block;
+    background-color: #FF9900;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 3px;
+    cursor: pointer;
+    top: 28px;
+    float: right;
+    right: 80px;
+    height: 22px;
+    position: absolute;
+    z-index: 9999;
+}
+.btnDiv_Add{
+    float: left;
+    color: #262626;
+    margin: 4px 0px;
+    margin-right: 1px;
+    padding-top: 4px;
+    padding-bottom: 1px;
+    padding-left: 6px;
+    padding-right: 6px;
+    display: inline-block;
+    background-color: #FF9900;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 3px;
+    cursor: pointer;
+    top: 28px;
+    float: right;
+    right: 112px;
+    height: 22px;
+    position: absolute;
+    z-index: 9999;
+}
+/* 地图悬浮按钮样式 */
+.btnDiv_Save {
+    float: left;
+    color: #262626;
+    margin: 4px 0px;
+    margin-right: 1px;
+    padding-top: 4px;
+    padding-bottom: 1px;
+    padding-left: 6px;
+    padding-right: 6px;
+    display: inline-block;
+    background-color: #FF9900;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 3px;
+    cursor: pointer;
+    top: 28px;
+    float: right;
+    right: 146px;
+    height: 22px;
+    position: absolute;
+    z-index: 9999;
+}
+.btnDiv_Del {
+    float: left;
+    color: #262626;
+    margin: 4px 0px;
+    margin-right: 1px;
+    padding-top: 4px;
+    padding-bottom: 1px;
+    padding-left: 6px;
+    padding-right: 6px;
+    display: inline-block;
+    background-color: #FF9900;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 3px;
+    cursor: pointer;
+    top: 28px;
+    float: right;
+    right: 16px;
+    height: 22px;
+    position: absolute;
+    z-index: 9999;
+}
+
+.engineDiv {
+	float: left;
+	color: #ffffff;
+	display: inline-block;
+	background-color: #ffffff;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 3px;
+	cursor: pointer;
+	top: 48px;
+	float: right;
+	left: 93px; 
+	height: 30px;
+	position: absolute;
+    z-index: 9999;
+    padding-left: 0px;
+    margin-top: 0px;
+    border: 1px solid #ADA8A8;
+}

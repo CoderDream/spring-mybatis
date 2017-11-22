@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="zhaojin.dao.ManagerDao">
+	<select id="getQuestionInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from question where 1=1 
+		<if test="type != null and type !=''">
+			and type  like ${type}
+		</if>
+		<if test="mainContent != null and mainContent !=''">
+			and mainContent like ${mainContent}
+		</if>
+		<if test="questId != null and questId !=''">
+			and questID = #{questId}
+		</if>
+		<if test="startrum != null ">
+			limit #{startrum},#{size}
+		</if>
+	</select>
+	<select id="getQuestionDetailInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from questiondetail where 1=1 
+		<if test="questId != null and questId !=''">
+			and questID = #{questId}
+		</if>
+	</select>
+	
+	<select id="getQuestionCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from question where 1=1 
+		<if test="type != null and type !=''">
+			and type  like ${type}
+		</if>
+		<if test="mainContent != null and mainContent !=''">
+			and mainContent like ${mainContent}
+		</if>
+	</select>
+	<select id="getAccountInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from operator where 1=1 
+		<if test="optID != null and optID !=''">
+			and optID  like ${optID}
+		</if>
+		<if test="optName != null and optName !=''">
+			and optName like ${optName}
+		</if>
+		<if test="startrum != null ">
+			limit #{startrum},#{size}
+		</if>
+	</select>
+	<select id="getAccountCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(*) from operator where 1=1 
+		<if test="optID != null and optID !=''">
+			and optID  like ${optID}
+		</if>
+		<if test="optName != null and optName !=''">
+			and optName like ${optName}
+		</if>
+	</select>
+	
+	<insert id="addQuestion" parameterType="java.util.Map">
+		insert into question(type,mainContent,score,easyLevel,answer) values (#{type},#{mainContent},#{score},#{easyLevel},#{answer})
+	</insert>
+	<insert id="addQuestionDetail" parameterType="java.util.Map"> 
+		<selectKey resultType="int" keyProperty="questID" order="BEFORE">
+			SELECT MAX(questID) as id FROM question
+		</selectKey>
+		insert into questiondetail (optionNo,optionContent,questID) values (#{optionNo},#{optionContent},#{questID})
+	</insert>
+	
+	<delete id="delQuestion" parameterType="java.util.Map">
+		DELETE FROM question WHERE questID = #{qusid}
+	</delete>
+	<delete id="delQuestionDetail" parameterType="java.util.Map">
+		DELETE FROM questiondetail WHERE questID = #{qusid}
+	</delete>
+	<delete id="delQuestionPaperDetail" parameterType="java.util.Map">
+		DELETE FROM paperdetail WHERE questID = #{qusid}
+	</delete>
+	<select id="getAllpaperDetailIdByQusId" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from paperdetail where questID = #{qusid}
+	</select>
+	<delete id="delStudScoreDetail" parameterType="java.util.Map">
+		DELETE FROM studscoredetail WHERE paperDetailID = #{paperDetailID}
+	</delete>
+	<delete id="delOperator" parameterType="java.util.Map">
+		DELETE FROM operator WHERE optID = #{optID}
+	</delete>
+	<delete id="delStudentInfo" parameterType="java.util.Map">
+		DELETE FROM studentinfo WHERE optID = #{optID}
+	</delete>
+	
+	<update id="updateQuestion" parameterType="java.util.Map">
+		UPDATE question SET TYPE = #{type},score = #{score},answer = #{answer},easyLevel = #{easyLevel},mainContent = #{mainContent} WHERE questID = #{questId}
+	</update>
+	<update id="updateQuestionDetail" parameterType="java.util.Map">
+		UPDATE questiondetail SET optionContent = #{optionContent} WHERE questID = #{questId} AND optionNo = #{optionNo}
+	</update>
+	
+	
+	<insert id="addAccount" parameterType="java.util.Map">
+		insert into operator (optID,optName,password,isAdmin) values (#{optID,jdbcType=VARCHAR},#{optName,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{isAdmin})
+	</insert>
+	<insert id="addStudentInfo" parameterType="java.util.Map">
+		insert into studentinfo (name,tel,num,cla,optID) values (#{optName,jdbcType=VARCHAR},#{tel,jdbcType=INTEGER},#{num,jdbcType=INTEGER},#{cla,jdbcType=VARCHAR},#{optID,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="getUpdateAccountInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT * FROM operator k WHERE k.optID = #{optID} 
+	</select>
+	<select id="getStudentInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT * FROM studentinfo p WHERE  p.optID = #{optID}
+	</select>
+	
+	<update id="updateOperatorInfo"  parameterType="java.util.Map">
+		update operator set optID=#{optID},password=#{password},isAdmin=#{isAdmin},optName=#{optName} where optID = #{oldOptID}
+	</update>
+	<update id="updateStudentInfo" parameterType="java.util.Map">
+		update studentinfo set optID=#{optID},num=#{num},cla=#{cla},name=#{name},tel=#{tel} where optID = #{oldOptID} 
+	</update>
+</mapper>

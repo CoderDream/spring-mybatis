@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="zhaojin.dao.StudentDao">
+	<insert id="addStu" parameterType="java.util.Map">
+		insert into studentinfo(name,num,tel,cla,optId) values(
+		#{realname},#{num},#{tel},#{cla},#{username})
+	</insert>
+	
+	<select id="getQuestionInfoByPaperId" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT *  FROM question WHERE questID IN (SELECT questID FROM paperdetail WHERE paperId = #{paperId})
+	</select>
+	<select id="getQuestionDetailInfoByQuestId" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT * FROM questiondetail WHERE questID = #{questId}
+	</select>
+	
+	<insert id="insertIntoStudscore" parameterType="java.util.Map">
+		INSERT INTO studscore (paperID,totalScore,optID) VALUES (#{paperId},#{totalScore},#{optID})
+	</insert>
+	
+	
+	<insert id="insertIntoStudscoredetail" parameterType="java.util.Map">
+		<selectKey keyProperty="studScoreID" resultType="int" order="BEFORE">
+			SELECT MAX(studScoreID) FROM studscore
+		</selectKey>
+		insert into studscoredetail (optID,paperDetailID,myAnswer,score,answer)
+		 values (#{optID},(select paperDetailID from paperdetail where paperID = #{paperId} and questID = #{questId}),#{myAnswer},#{score},#{answer})
+	</insert>
+	
+	<select id="getExamDoneInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT p.paperID,fullScore,DATE_FORMAT(paperTime,'%Y-%m-%d %H:%i:%s') paperTime ,validateTime,paperName,byUser,DATE_FORMAT(available,'%Y-%m-%d %H:%i:%s') available,t.totalScore  FROM paper p INNER JOIN studscore t ON p.paperID = t.paperID WHERE 1=1 
+		AND p.paperID  IN (SELECT paperID FROM studscore WHERE optID = #{optID} ) 
+		<if test="byUser != null and byUser !=''">
+			and byUser  like ${byUser}
+		</if>
+		<if test="paperName != null and paperName !=''">
+			and paperName like ${paperName}
+		</if>
+		<if test="startrum != null ">
+			limit #{startrum},#{size}
+		</if>
+	</select>
+	<select id="getDoneExamCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT count(*) FROM studscore WHERE optID = #{optID}
+	</select>
+	<select id="getWrongQuestCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM studscoredetail WHERE 1=1 AND optID = #{optID}
+		<if test="doSerach != null and doSerach != ''">
+			 AND paperDetailID IN ( SELECT   paperDetailID FROM paperdetail WHERE 1=1
+			 <if test="paperName != null and paperName != ''">
+			  and  paperID IN (SELECT paperID  FROM paper WHERE paperName LIKE ${paperName})
+			 </if>
+			 <if test="mainContent != null and mainContent != ''">
+			   AND questID IN (SELECT questID FROM question WHERE mainContent LIKE ${mainContent} ))
+			 </if>
+		</if>
+	</select>
+	<select id="getWrongQuestInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT * FROM studscoredetail WHERE 1=1 AND optID = #{optID}
+		<if test="doSerach != null and doSerach != ''">
+			 AND paperDetailID IN ( SELECT   paperDetailID FROM paperdetail WHERE 1=1
+			 <if test="paperName != null and paperName != ''">
+			  and  paperID IN (SELECT paperID  FROM paper WHERE paperName LIKE ${paperName})
+			 </if>
+			 <if test="mainContent != null and mainContent != ''">
+			   AND questID IN (SELECT questID FROM question WHERE mainContent LIKE ${mainContent} ))
+			 </if>
+		</if>
+		<if test="startrum != null ">
+			limit #{startrum},#{size}
+		</if>
+	</select>
+	<select id="getPaperInfoAndQuestInfoByPaperdetailID" parameterType="java.util.Map" resultType="java.util.Map">
+		 SELECT * FROM (	SELECT paperID,fullScore,DATE_FORMAT(paperTime,'%Y-%m-%d %H:%i:%s') paperTime ,validateTime,paperName,byUser,DATE_FORMAT(available,'%Y-%m-%d %H:%i:%s') available FROM paper WHERE paperID = (  SELECT paperID FROM paperdetail WHERE paperDetailID = #{paperDetailID})) t,
+	(SELECT * FROM question WHERE questID = ( SELECT questID FROM paperdetail WHERE paperDetailID = #{paperDetailID})) f
+	</select>
+</mapper>
