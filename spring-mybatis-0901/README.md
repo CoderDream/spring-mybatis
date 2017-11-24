@@ -253,7 +253,7 @@ DEBUG [main] - ==> Parameters: tom(String), 男(String), 25(Integer), 1(Integer)
 DEBUG [main] - <==    Updates: 1
 ```
 
-代码7：InsertTest.java
+代码7：DeleteTest.java
 
 ```java
 package org.fkit.test;
